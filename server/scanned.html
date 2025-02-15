@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmação</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #1e272e;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Será que é isso mesmo?</h1>
+
+  <script>
+    // Envia um POST para o servidor informando que o QR Code foi escaneado.
+    fetch('http://192.168.18.32:3000/api/qrscanned', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        scanned: true,
+        timestamp: new Date().toISOString()
+      })
+    })
+    .then(response => response.json())
+    .then(data => console.log("QR Code registrado:", data))
+    .catch(error => console.error("Erro ao enviar confirmação:", error));
+  </script>
+</body>
+</html>
