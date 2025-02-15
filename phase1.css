@@ -1,0 +1,359 @@
+body.phase1, body.phase1-body {
+    background: #000 !important;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .phase1-container {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  
+  .hacker-title {
+    font-family: 'Courier New', monospace;
+    color: #0f0;
+    font-size: 3em;
+    text-shadow: 0 0 10px #0f0;
+    margin-bottom: 30px;
+  }
+  
+  .hacker-text {
+    font-family: 'Courier New', monospace;
+    color: #0f0;
+    font-size: 1.2em;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.5;
+    opacity: 0;
+  }
+  
+  .continue-btn {
+    display: block;
+    opacity: 0;
+    padding: 15px 40px;
+    background: transparent;
+    border: 2px solid #0f0;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .continue-btn:hover {
+    background: #0f0;
+    color: #000;
+  }
+  
+  @keyframes glitch {
+    0% { text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff; }
+    100% { text-shadow: -2px -2px #ff00ff, 2px 2px #00ffff; }
+  }
+  
+  .glitch-effect {
+    animation: glitch 0.1s infinite;
+  }
+  
+  .password-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .password-container {
+    width: 90%;
+    max-width: 1280px;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    padding: 20px;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  }
+  
+  .password-container h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #0f0;
+  }
+  
+  .password-container p {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+  }
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  #password-input {
+    width: 200px;
+    font-size: 2em;
+    text-align: center;
+    padding: 10px;
+    border: 2px solid #0f0;
+    background: transparent;
+    color: #0f0;
+    outline: none;
+    border-radius: 5px;
+    letter-spacing: 10px;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0);
+  }
+  
+  .delete-btn {
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid #0f0;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background 0.3s;
+    box-shadow: 0 0 5px #0f0;
+  }
+  
+  .delete-btn:hover {
+    background: #0f0;
+    transform: scale(1.1);
+  }
+  
+  .delete-btn svg {
+    width: 24px;
+    height: 24px;
+    transition: fill 0.3s;
+  }
+  
+  .delete-btn:hover svg {
+    fill: #000;
+  }
+  
+  .num-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 70px);
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .num-btn {
+    width: 70px;
+    height: 70px;
+    font-size: 1.5em;
+    border: 2px solid #0f0;
+    background: transparent;
+    color: #0f0;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s, color 0.3s;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #0f0;
+  }
+  
+  .num-btn:hover {
+    background: #0f0;
+    color: #000;
+    transform: scale(1.1);
+  }
+  
+  .submit-btn {
+    padding: 10px 20px;
+    font-size: 1.5em;
+    background: transparent;
+    border: 2px solid #0f0;
+    color: #0f0;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+  }
+  
+  .submit-btn:hover {
+    background: #0f0;
+    color: #000;
+    transform: scale(1.05);
+  }
+  
+  .password-hint {
+    font-size: 1em;
+    opacity: 0.8;
+    margin-top: 10px;
+  }
+  
+  #timer {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    text-shadow: 0 0 10px #0f0;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 2px solid #0f0;
+  }
+  
+  .hint-btn {
+    background: transparent;
+    border: 1px solid #0f0;
+    color: #0f0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: none;
+    font-size: 1.2em;
+    line-height: 30px;
+    text-align: center;
+  }
+  
+  .crypto-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    padding: 40px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease-out;
+  }
+  
+  .crypto-block {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .crypto-block:hover {
+    transform: scale(1.05);
+  }
+  
+  .crypto-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .crypto-text {
+    color: #0f0;
+    font-size: 1.2em;
+    margin: 15px 0;
+    word-break: break-all;
+    text-align: center;
+    padding: 10px;
+    background: #000;
+    border-radius: 5px;
+  }
+  
+  .crypto-input {
+    width: 80%;
+    padding: 10px;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .submit-crypto-btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .submit-crypto-btn:hover {
+    background-color: #218838;
+  }
+  
+  .final-overlay {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: none;
+    width: auto;
+    min-width: 400px;
+  }
+  
+  .final-box {
+    background-color: #222;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  
+  .final-box h2 {
+    color: #fff;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+  }
+  
+  #final-password {
+    width: 60%;
+    padding: 8px;
+    font-size: 1.2em;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+  }
+  
+  #confirm-final-btn {
+    padding: 8px 20px;
+    font-size: 1em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  #confirm-final-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .scan-line {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(0, 255, 255, 0);
+    animation: scan 1s infinite;
+  }
+  
+  @keyframes scan {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fases</title>
+  <link rel="stylesheet" href="phases.css" />
+</head>
+<body>
+  <div class="overlay"></div>
+  
+  <div class="cards-wrapper">
+    <div class="card-container" data-phase="phase1" onclick="animateCard(this)">
+      <a href="fase1.html" class="card-link">
+        <div class="card-front">Fase 1</div>
+      </a>
+      <div class="card-code">???</div>
+    </div>
+    <div class="card-container" data-phase="phase2" onclick="animateCard(this)">
+      <a href="fase2.html" class="card-link">
+        <div class="card-front">Fase 2</div>
+      </a>
+      <div class="card-code">???</div>
+    </div>
+    <div class="card-container" data-phase="phase3" onclick="animateCard(this)">
+      <a href="fase3.html" class="card-link">
+        <div class="card-front">Fase 3</div>
+      </a>
+      <div class="card-code">???</div>
+    </div>
+    <div class="card-container" data-phase="phase4" onclick="animateCard(this)">
+      <a href="fase4.html" class="card-link">
+        <div class="card-front">Fase 4</div>
+      </a>
+      <div class="card-code">???</div>
+    </div>
+  </div>
+
+  <div class="final-key-container">
+    <h2>Chave Final</h2>
+    <input type="text" id="final-key-input" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" />
+    <button id="final-key-btn">Enviar</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    function generateRandomKey() {
+      const pool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let key = '';
+      for (let i = 0; i < 4; i++) {
+        key += pool.charAt(Math.floor(Math.random() * pool.length));
+      }
+      return key;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.from(".card-container", {
+        duration: 1,
+        y: -50,
+        opacity: 0,
+        stagger: 0.2,
+        ease: "power2.out",
+        delay: 0.5
+      });
+
+      const containers = document.querySelectorAll(".card-container");
+      containers.forEach(container => {
+        const phase = container.getAttribute("data-phase");
+        if (localStorage.getItem(phase + "Complete") === "true") {
+          container.classList.add("passed");
+          let keyPart = localStorage.getItem(phase + "Key");
+          if (!keyPart) {
+            keyPart = generateRandomKey();
+            localStorage.setItem(phase + "Key", keyPart);
+          }
+          container.querySelector(".card-code").textContent = keyPart;
+        } else {
+          container.querySelector(".card-code").textContent = "???";
+        }
+      });
+
+      const finalKeyInput = document.getElementById("final-key-input");
+      finalKeyInput.addEventListener("input", (e) => {
+        let value = e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+        if (value.length > 16) value = value.substring(0, 16);
+        let formatted = value.match(/.{1,4}/g);
+        formatted = formatted ? formatted.join("-") : "";
+        e.target.value = formatted;
+      });
+
+      document.getElementById("final-key-btn").addEventListener("click", () => {
+        let finalKey = "";
+        const phases = ["phase1", "phase2", "phase3", "phase4"];
+        for (let p of phases) {
+          const keyPart = localStorage.getItem(p + "Key");
+          if (!keyPart) {
+            finalKey = null;
+            break;
+          }
+          finalKey += keyPart;
+        }
+        if (!finalKey) {
+          animateError();
+          return;
+        }
+        const finalKeyFormatted = finalKey.match(/.{1,4}/g).join("-");
+        const userInput = finalKeyInput.value.trim().toUpperCase();
+        if (userInput === finalKeyFormatted) {
+          window.location.href = "final.html";
+        } else {
+          animateError();
+        }
+      });
+
+      function animateError() {
+        gsap.to(finalKeyInput, { 
+          duration: 0.1, x: 10, repeat: 3, yoyo: true, backgroundColor: "#f00",
+          onComplete: () => {
+            gsap.to(finalKeyInput, { duration: 0.3, x: 0, backgroundColor: "#222" });
+          }
+        });
+      }
+
+      gsap.from(".final-key-container", {
+        duration: 1,
+        opacity: 0,
+        y: 50,
+        delay: 1,
+        ease: "power2.out"
+      });
+    });
+
+    function animateCard(container) {
+      if (!container.classList.contains("clicked")) {
+        container.classList.add("clicked");
+        container.style.pointerEvents = "none";
+        gsap.to(container, { 
+          duration: 0.5, 
+          y: 100,
+          ease: "power2.out",
+          onComplete: () => {
+            gsap.to([".cards-wrapper", ".final-key-container"], {
+              duration: 0.5,
+              opacity: 0,
+              onComplete: () => {
+                gsap.to(document.body, {
+                  duration: 0.5,
+                  backgroundColor: "#000",
+                  onComplete: () => {
+                    const link = container.querySelector(".card-link").getAttribute("href");
+                    window.location.href = link;
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>
+
